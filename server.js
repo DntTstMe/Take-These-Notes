@@ -8,7 +8,7 @@ const htmlRoutes = require('./routes/htmlRoutes');  // Import the HTML routes
 const app = express();
 
 // Define the port number that the server will listen on
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 // Middleware Setup
 app.use(express.urlencoded({ extended: true }));  // Parse URL-encoded data
