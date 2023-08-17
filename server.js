@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));  // Parse URL-encoded data
 app.use(express.json());  // Parse JSON data from request bodies
 app.use(express.static(path.join(__dirname, 'public')));  // Serve static files from the 'public' directory
 
-// Mount API routes under the '/api' path
+// Mount API routes under the /api path
 app.use('/api', apiRoutes);
 
 // Mount HTML routes under the root path
