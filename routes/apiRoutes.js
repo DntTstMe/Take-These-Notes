@@ -14,3 +14,39 @@ async function readNotesFile() {
         throw new Error("Failed to read notes.");
     }
 }
+// Route to get all notes
+router.get('/notes', async (req, res) => {
+    try {
+        const notes = await readNotesFile();
+        res.json(notes);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Route to add a new note
+router.post('/notes', async (req, res) => {
+    try {
+        const jsonNotes = await readNotesFile();
+        const newNote = { ...req.body, id: Date.now().toString() };
+        jsonNotes.push(newNote);
+        await writeNotesFile(jsonNotes);
+        res.json(newNote);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Route to delete a note by ID
+router.delete('/notes/:id', async (req, res) => {
+    try {
+        let jsonNotes = await readNotesFile();
+        jsonNotes = jsonNotes.filter(note => note.id !== req.params.id);
+        await writeNotesFile(jsonNotes);
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+module.exports = router;
